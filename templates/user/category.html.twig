@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of all Departments!{% endblock %}
+{% block body %}
+      {#{dump(users)}#}
+  {# {% if 'success'  %} not working #}
+      
+      <!--div id="flashmsg" class="container"-->  
+            {% for success in app.flashes('success') %}
+            <div id="flashmsg" class="container alert alert-success">  
+                 {{ success }}
+            {% endfor %}
+            </div>
+      <!--/div-->
+   {# {% endif %} #}
+   <table class= "table table-striped hover table-hover">
+     <thread>
+        <tr class = "table table-info">
+            <td>Id</td>
+            <td>Department</td>
+        </tr>
+    </thread>
+    <tbody>
+         {% for department in departments %} {#twig foreach https://twig.symfony.com/doc/2.x/tags/for.html #}
+            <tr>
+               <td>{{ department.id|e }}</td>
+               <td><p class="fw-bold mb-1"><a href="{{path('user.showByCategory',{CategoryId: department.id })}}">{{ department.name|e }}</a></p>
+               </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+   </table>
+
+<!--li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{#{{ path('welcome',{name: 'info'}) }} #}">Remove User</a></li>
+            <li><a class="dropdown-item" href="{# {{path('user.createUser')}} #}">Add User</a></li>
+          </ul-->
+{% endblock %}   

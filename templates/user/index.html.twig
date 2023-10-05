@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List of all Users!{% endblock %}
+{% block body %}
+      {#{dump(users)}#}
+  {# {% if 'success'  %} not working #}
+      
+      <!--div id="flashmsg" class="container"-->  
+            {% for success in app.flashes('success') %}
+            <div id="flashmsg" class="container alert alert-success">  
+                 {{ success }}
+            {% endfor %}
+            </div>
+      <!--/div-->
+   {# {% endif %} #}
+
+     <table class= "table table-striped hover table-hover">
+     <thread>
+     <tr class = "table table-info">
+     <td>Id</td>
+     <td>Username</td>
+     <td>Image</td>
+     <td>Profile</td>
+     <td>Department</td>
+     <td>Action</td>
+     <td>Action</td>
+
+     </tr>
+     </thread>
+     <tbody>
+         {% for user in users %} {#twig foreach https://twig.symfony.com/doc/2.x/tags/for.html #}
+            <tr>
+               <td>{{ user.id|e }}</td>
+               <td><p class="fw-bold mb-1"><a href="{{path('user.show',{id: user.id })}}">{{ user.username|e }}</a></p>
+                   <p class="text-muted mb-0">{{ user.email|e }}</p></td>
+               <td>
+                 <div class="d-flex align-items-center">
+                 <img
+                    src="{{ '/uploads/' ~ user.avatar|e }}" 
+                    class="rounded-circle"
+                    alt=""
+                    style="width: 45px; height: 45px"
+                  />
+                 </div>
+               </td>  
+               <td>
+                  <p class="fw-normal mb-1">{{user.attach}}</p>
+                  <p class="text-muted mb-0"><a href="{{asset('uploads/' ~ user.attach) }}">View Profile</a></p>
+               </td>  
+               <td><em>{{user.department}}</em></td>
+               <td><a href="{{path('user.show',{id: user.id})}}" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Edit</a></td>
+               <td><a href="{{path('user.remove',{id:user.id})}}" class="btn btn-danger" tabindex="-1" role="button" aria-disabled="true">Remove</a></td>
+            </tr>   
+        {% endfor %}
+     </tbody>   
+     </table>
+{% endblock %}
+{#
+{% block body %}
+
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/myproject8.2/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/wamp64/www/myproject8.2/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
+#}

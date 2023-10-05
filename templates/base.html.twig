@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {# for bootstrap nav bar and apperaing div container class working #}
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {# require for dropdwon navbar #}
+        
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+      
+     <!-- copied from https://getbootstrap.com/docs/4.0/components/navbar/ -->   
+  <!--nav class="navbar navbar-expand-lg navbar-light bg-light"-->
+
+  <nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bolder" href="{{path('home')}}">InfoGlobe</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('update')}}">Custom Link</a>
+        </li>
+            {% set userclass = 'nav-link dropdown-toggle' %}
+
+      {% if is_granted('ROLE_USER') %}  
+            {% set userclass = 'nav-link dropdown-toggle' %}
+      {% else %}
+            {% set userclass = 'nav-link disabled' %}
+       {% endif %} 
+        <li class="nav-item dropdown">
+          <a class={{userclass}} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Users Details
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{path('user.index')}}">List of Users</a></li>
+            <li><a class="dropdown-item" href="{{ path('welcome',{name: 'info'}) }}">Account Details</a></li>
+            <li><a class="dropdown-item" href="{{ path('user.category') }}">Users By Category</a></li>
+
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ path('welcome',{name: 'info'}) }}">Remove User</a></li>
+            <li><a class="dropdown-item" href="{{path('user.createUser')}}">Add User</a></li>
+          </ul>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link disabled">Disabled</a>
+        </li>
+         <li class="nav-item">
+          {% if app.user %}
+              <a class="nav-link fw-bolder" href="#">Welcome: {{ app.user.userIdentifier }}</a>
+              </li>
+              <li class="nav-item">  
+                 <a class="nav-link fw-bolder" href="{{ path('app_logout') }}">Sign out</a>
+              </li> 
+          {% else %}
+              <li class="nav-item">  
+                <a class="nav-link fw-bolder" href="{{ path('app_login') }}">Sign In</a>
+              </li> 
+       
+                 {#} {% do redirect('/register.create') %} 
+                 {{ render {{path ('register.create') }} }}  #}
+                
+    {% endif %}  
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+ <div class="container">  
+        {% block body %}
+            {% for success in app.flashes('success') %}
+                 {{ success }}
+            {% endfor %}
+        {{title}}
+ {% endblock %} </div>
+    </body>
+</html>

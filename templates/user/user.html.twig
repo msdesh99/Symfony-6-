@@ -1,0 +1,10 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+     {% for success in app.flashes('loginsuccess') %}
+            <div id="flashmsg" class="container alert alert-success">  
+                 {{ success }}
+            {% endfor %}
+            </div>
+  <h1> Welcome : {{ username }} to twig </h1>
+{% endblock %}

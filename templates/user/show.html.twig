@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{# https://mdbootstrap.com/docs/standard/data/tables/ 
+https://mdbootstrap.com/docs/standard/data/tables/#docsTabsOverview
+https://getbootstrap.com/docs/5.2/components/badge/ #}
+<br>
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Department</th>
+      <th>Status</th>
+      <!--th>Position</th>
+      <th>Actions</th-->
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="d-flex align-items-center">
+          <img
+              src="{{ '/uploads/' ~ user.avatar|e }}" 
+              class="rounded-circle"
+              alt=""
+              style="width: 45px; height: 45px"
+              />
+          <div class="ms-3">
+            <p class="fw-bold mb-1">{{user.username}}</p>
+            <p class="text-muted mb-0">{{user.email}}</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p class="fw-normal mb-1">{{user.attach}}</p>
+        <p class="text-muted mb-0"><a href="{{asset('uploads/' ~ user.attach) }}">View Profile</a></p>
+      </td>
+      <td><em>{{user.department}}</em></td>
+      <td>
+        <span class="badge text-bg-success rounded-pill d-inline">{{user.id}}</span>
+      </td>
+      <!--td>Senior</td>
+      <td>
+        <button
+                type="button"
+                class="btn btn-link btn-rounded btn-sm fw-bold"
+                data-mdb-ripple-color="dark"
+                >
+          Edit
+        </button>
+      </td-->
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

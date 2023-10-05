@@ -1,0 +1,42 @@
+php bin/console   //help commands on <command>
+
+php bin/console make:controller registration
+/*created: src/Controller/RegistrationController.php
+created: templates/registration/index.html.twig */
+
+php bin/console make:user   
+//creates entity.php, repository.php updated: config/packages/security.yaml 
+//entity needs to be created seperatly
+
+php bin/console doctrine:schema:update --dump-sql //displays sql statment that will update Doctrine
+
+php bin/console doctrine:schema:update --force //execute sql statment that will update Doctrine
+
+php bin/console debug:route  //displays all existing routes
+
+php bin/console make:auth   
+/* created: src/Security/CustomAuthenticator.php
+ updated: config/packages/security.yaml
+ created: src/Controller/SecurityController.php
+ created: templates/security/login.html.twig    
+ Finish the redirect "TODO" in the App\Security\CustomAuthenticator::onAuthenticationSuccess() method.
+ - Review & adapt the login template: templates/security/login.html.twig.
+*/
+
+
+Symfony commands:
+symfony server:start -d
+symfony server:stop
+
+             ********************************************************
+Creating LoginPage:
+1 make:user
+2 make:auth
+3 create entity: php bin/console doctrine:schema:update --dump-sql
+4 php bin/console doctrine:schema:update --force
+5 make:controller registration //for registration
+6. make:router logRouter
+    created: src/Security/Voter/LoginVoter.php
+     Next: Open your voter and add your logic.
+ Find the documentation at https://symfony.com/doc/current/security/voters.html
+ https://symfony.com/doc/6.3/security.html#securing-other-services
