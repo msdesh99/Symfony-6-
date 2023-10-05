@@ -1,5 +1,5 @@
 <?php
-
+//added in github
 namespace App\Entity;
 
 use App\Repository\LoginRepository;
